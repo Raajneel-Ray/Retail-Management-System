@@ -29,7 +29,7 @@ public class ServiceClass {
     //This method checks whether a product exists by its name.
     public boolean validateProduct(Product product) {
         Product result = productRepository.findByName(product.getName());
-        if(result!=null)
+        if(result == null)
         {
             return false;
         }
