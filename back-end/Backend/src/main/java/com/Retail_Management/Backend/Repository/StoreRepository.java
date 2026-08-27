@@ -13,6 +13,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     Store findByid(Long id);
 
-    @Query("SELECT DISTINCT s FROM Store s WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', : pname, '%'))")
+    @Query("SELECT DISTINCT s FROM Store s WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :pname, '%'))")
     List<Store> findBySubName(@Param("pname") String pname);
 }

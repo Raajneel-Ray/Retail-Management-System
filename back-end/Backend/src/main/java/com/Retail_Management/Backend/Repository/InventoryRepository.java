@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
-    @Query("SELECT i FROM INVENTORY i WHERE i.product.id= :productId AND i.store.id = :storeId")
+    @Query("SELECT i FROM Inventory i WHERE i.product.id= :productId AND i.store.id = :storeId")
     Inventory findByProductIdandStoreId(Long productId, Long storeId);
 
     List<Inventory> findByStore_Id(Long storeId); /** In Spring Data JPA, the underscore _ is a reserved character used
@@ -23,7 +23,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM INVENTORY i WHERE i.product.id = :productId")
+    @Query("DELETE FROM Inventory i WHERE i.product.id = :productId")
     void deleteByProductId(Long productId);
 
     /**Spring Data JPA does support automatic query generation for deletes (e.g., deleteByProduct_Id). So why write the @Query manually? Performance.
