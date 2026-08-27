@@ -3,10 +3,14 @@ package com.Retail_Management.Backend.Model;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "reviews")
 public class Review {
+    @Id
+    private String id;
+
     @NotNull(message = "Customer cannot be null.")
     private Long customerId;
 
@@ -30,6 +34,14 @@ public class Review {
         this.storeId = storeId;
         this.rating = rating;
         this.comment = comment;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Long getCustomerId() {
