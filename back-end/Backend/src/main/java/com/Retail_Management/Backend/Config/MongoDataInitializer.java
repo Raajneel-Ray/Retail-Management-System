@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.List;
-
+// This class will load the data to local mongo db everytime the app is started if not present.
 @Component
 public class MongoDataInitializer implements CommandLineRunner {
 
