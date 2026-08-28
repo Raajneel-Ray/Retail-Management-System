@@ -80,23 +80,25 @@ public class InventoryController {
     @PostMapping
     public Map<String, String> saveInventory(@RequestBody Inventory inventory) {
         Map<String, String> map = new HashMap<>();
-        try {
-            if(serviceClass.validateInventory(inventory)) {
-                inventoryRepository.save(inventory);
-            } else {
-                map.put("message", "Data already present in inventory");
-                return map;
-            }
-        } catch (DataIntegrityViolationException e) {
-            map.put("message", "Error: " + e);
-            System.out.println(e);
-            return map;
-        } catch (Exception e) {
-            map.put("message", "Error: " + e);
-            System.out.println(e);
+
+        // Validate product existence, store existence, and duplicate inventory before calling save()
+        // This prevents MySQL foreign key constraint violations that cause auto-increment ID skipping
+        String validationError = serviceClass.validateInventoryForSave(inventory);
+        if (validationError != null) {
+            map.put("message", validationError);
             return map;
         }
-        map.put("message", "Product added to inventory successfully");
+
+        try {
+            inventoryRepository.save(inventory);
+            map.put("message", "Product added to inventory successfully");
+        } catch (DataIntegrityViolationException e) {
+            map.put("message", "Error: " + e.getMessage());
+            System.out.println(e);
+        } catch (Exception e) {
+            map.put("message", "Error: " + e.getMessage());
+            System.out.println(e);
+        }
         return map;
     }
 

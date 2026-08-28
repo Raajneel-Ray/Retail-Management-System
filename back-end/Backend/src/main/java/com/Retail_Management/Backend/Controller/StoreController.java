@@ -24,8 +24,23 @@ public class StoreController {
 
     @PostMapping
     public Map<String, String> addStore(@RequestBody Store store) {
-        Store savedStore = storeRepository.save(store);
         Map<String, String> map = new HashMap<>();
+
+        // Validate store name and address before calling save() to avoid database constraint failures and ID skips
+        if (store == null || store.getName() == null || store.getName().trim().isEmpty()) {
+            map.put("message", "Store name cannot be null or blank.");
+            return map;
+        }
+        if (store.getAddress() == null || store.getAddress().trim().isEmpty()) {
+            map.put("message", "Store address cannot be null or blank.");
+            return map;
+        }
+        if (storeRepository.existsByName(store.getName().trim())) {
+            map.put("message", "Store with name '" + store.getName() + "' already exists.");
+            return map;
+        }
+
+        Store savedStore = storeRepository.save(store);
         map.put("message", "Store added successfully with id "+ savedStore.getId());
         return map;
     }
@@ -48,9 +63,15 @@ public class StoreController {
             orderService.saveOrder(placeOrderRequestDTO);
             map.put("message","Order placed successfully");
         }
-        catch(Error e)
+        catch(IllegalArgumentException e)
         {
-            map.put("Error",""+e);
+            // Catches validation failures (e.g. insufficient stock, missing product/store)
+            map.put("Error", e.getMessage());
+        }
+        catch(Exception e)
+        {
+            // Catches all general exceptions (replacing java.lang.Error to properly catch RuntimeExceptions)
+            map.put("Error", "Failed to place order: " + e.getMessage());
         }
         return map;
     }

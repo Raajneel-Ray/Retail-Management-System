@@ -11,6 +11,15 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    boolean existsBySku(String sku);
+    //Spring Data JPA translates existsBySku("ABC-123") into an optimized EXISTS SQL query that avoids loading entity data into memory:
+    //SELECT CASE WHEN COUNT(p.id) > 0 THEN TRUE ELSE FALSE END
+    //FROM products p
+    //WHERE p.sku = ?
+
+    // Checks if a product with the same name already exists to prevent duplicate insert attempts and ID skipping
+    boolean existsByName(String name);
+
     List<Product> findAll();
 
     List<Product> findByCategory(String category);

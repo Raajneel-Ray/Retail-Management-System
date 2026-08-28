@@ -32,15 +32,21 @@ public class ProductController {
      //    - Catch exceptions (e.g., `DataIntegrityViolationException`) and return appropriate error message. **/
     @PostMapping
     public Map<String, String> addProduct(@RequestBody Product product) {
-        Map<String, String> map = new HashMap<>();
-        try {
-            if(!serviceClass.validateProduct(product)) {
-                productRepository.save(product);
-                map.put("message","Product added successfully : " + product.getSku());
-                return map;
-            }
+        Map<String, String> map = new HashMap<>();// 1. Check SKU before attempting database insert
+        if (serviceClass.validateSku(product.getSku())) {
+            map.put("message", "SKU should be unique");
+            return map;
+        }
+
+        // 2. Check duplicate product name
+        if (serviceClass.validateProduct(product)) {
             map.put("message", "Product already present in database");
             return map;
+        }
+
+        try {
+            productRepository.save(product);
+            map.put("message", "Product added successfully : " + product.getSku());
         } catch (DataIntegrityViolationException e) {
             map.put("message", "SKU should be unique");
         }
