@@ -32,15 +32,21 @@ public class ProductController {
      //    - Catch exceptions (e.g., `DataIntegrityViolationException`) and return appropriate error message. **/
     @PostMapping
     public Map<String, String> addProduct(@RequestBody Product product) {
-        Map<String, String> map = new HashMap<>();
-        try {
-            if(!serviceClass.validateProduct(product)) {
-                productRepository.save(product);
-                map.put("message","Product added successfully : " + product.getSku());
-                return map;
-            }
+        Map<String, String> map = new HashMap<>();// 1. Check SKU before attempting database insert
+        if (serviceClass.validateSku(product.getSku())) {
+            map.put("message", "SKU should be unique");
+            return map;
+        }
+
+        // 2. Check duplicate product name
+        if (serviceClass.validateProduct(product)) {
             map.put("message", "Product already present in database");
             return map;
+        }
+
+        try {
+            productRepository.save(product);
+            map.put("message", "Product added successfully : " + product.getSku());
         } catch (DataIntegrityViolationException e) {
             map.put("message", "SKU should be unique");
         }
@@ -112,12 +118,17 @@ public class ProductController {
     }
 
     /**- Annotate with `@GetMapping("filter/{category}/{storeId}")` to filter products by `category` and `storeId`.
-     //    - Use `findProductByCategory()` method from `ProductRepository` to retrieve products.
-     //    - Return filtered products in a `Map<String, Object>` with key `product`. */
+     //    - Use `findByCategoryAndStoreId()` method from `ProductRepository` to retrieve products.
+     //    - Return filtered products in a `Map<String, Object>` with key `products`.
+     //    - If no inventory is present, return a message response. */
     @GetMapping("filter/{category}/{storeId}")
     public Map<String, Object> getProductByCategoryAndStoreId(@PathVariable String category, @PathVariable Long storeId) {
         Map<String, Object> map = new HashMap<>();
         List<Product> result = productRepository.findByCategoryAndStoreId(storeId, category);
+        if (result == null || result.isEmpty()) {
+            map.put("message", "No inventory is present in the mentioned store for the mentioned category");
+            return map;
+        }
         map.put("products", result);
         return map;
     }
@@ -131,14 +142,14 @@ public class ProductController {
     public Map<String, String> deleteProduct(@PathVariable Long id) {
         Map<String, String> map = new HashMap<>();
         if(!serviceClass.validateProductId(id)) {
-            map.put("message", "Id " + id + "not present in database.");
+            map.put("message", "Id " + id + " not present in database.");
             return map;
         }
         inventoryRepository.deleteByProductId(id);
         orderItemRepository.deleteByProductId(id);
         productRepository.deleteById(id);
 
-        map.put("message", "Id " + id + "is deleted successfully.");
+        map.put("message", "Id " + id + " is deleted successfully.");
         return map;
     }
 
