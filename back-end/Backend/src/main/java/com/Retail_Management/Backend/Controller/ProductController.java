@@ -118,12 +118,17 @@ public class ProductController {
     }
 
     /**- Annotate with `@GetMapping("filter/{category}/{storeId}")` to filter products by `category` and `storeId`.
-     //    - Use `findProductByCategory()` method from `ProductRepository` to retrieve products.
-     //    - Return filtered products in a `Map<String, Object>` with key `product`. */
+     //    - Use `findByCategoryAndStoreId()` method from `ProductRepository` to retrieve products.
+     //    - Return filtered products in a `Map<String, Object>` with key `products`.
+     //    - If no inventory is present, return a message response. */
     @GetMapping("filter/{category}/{storeId}")
     public Map<String, Object> getProductByCategoryAndStoreId(@PathVariable String category, @PathVariable Long storeId) {
         Map<String, Object> map = new HashMap<>();
         List<Product> result = productRepository.findByCategoryAndStoreId(storeId, category);
+        if (result == null || result.isEmpty()) {
+            map.put("message", "No inventory is present in the mentioned store for the mentioned category");
+            return map;
+        }
         map.put("products", result);
         return map;
     }
@@ -137,14 +142,14 @@ public class ProductController {
     public Map<String, String> deleteProduct(@PathVariable Long id) {
         Map<String, String> map = new HashMap<>();
         if(!serviceClass.validateProductId(id)) {
-            map.put("message", "Id " + id + "not present in database.");
+            map.put("message", "Id " + id + " not present in database.");
             return map;
         }
         inventoryRepository.deleteByProductId(id);
         orderItemRepository.deleteByProductId(id);
         productRepository.deleteById(id);
 
-        map.put("message", "Id " + id + "is deleted successfully.");
+        map.put("message", "Id " + id + " is deleted successfully.");
         return map;
     }
 
