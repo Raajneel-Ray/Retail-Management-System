@@ -1,5 +1,7 @@
 package com.Retail_Management.Backend.Service;
 
+import com.Retail_Management.Backend.Dto.OrderItemResponseDTO;
+import com.Retail_Management.Backend.Dto.OrderResponseDTO;
 import com.Retail_Management.Backend.Dto.PlaceOrderRequestDTO;
 import com.Retail_Management.Backend.Dto.PurchaseProductDTO;
 import com.Retail_Management.Backend.Model.*;
@@ -125,6 +127,67 @@ public class OrderService {
 
             orderItemRepository.save(orderItem);
         }
+    }
+
+    /**
+     * Converts an OrderDetails entity to an OrderResponseDTO.
+     */
+    private OrderResponseDTO toOrderResponseDTO(OrderDetails order) {
+        OrderResponseDTO dto = new OrderResponseDTO();
+        dto.setOrderId(order.getId());
+        dto.setCustomerName(order.getCustomer().getName());
+        dto.setCustomerEmail(order.getCustomer().getEmail());
+        dto.setStoreName(order.getStore().getName());
+        dto.setTotalPrice(order.getTotalPrice());
+        dto.setDate(order.getDate());
+
+        if (order.getOrderItems() != null) {
+            List<OrderItemResponseDTO> itemDTOs = order.getOrderItems().stream().map(item -> {
+                OrderItemResponseDTO itemDTO = new OrderItemResponseDTO();
+                itemDTO.setId(item.getId());
+                itemDTO.setProductName(item.getProduct().getName());
+                itemDTO.setProductSku(item.getProduct().getSku());
+                itemDTO.setQuantity(item.getQuantity());
+                itemDTO.setPrice(item.getPrice());
+                return itemDTO;
+            }).toList();
+            dto.setOrderItems(itemDTOs);
+        }
+
+        return dto;
+    }
+
+    /**
+     * Fetch all orders for a store.
+     */
+    public List<OrderResponseDTO> getOrdersByStore(Long storeId) {
+        storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("Store not found with id: " + storeId));
+
+        List<OrderDetails> orders = orderDetailsRepository.findByStoreId(storeId);
+        return orders.stream().map(this::toOrderResponseDTO).toList();
+    }
+
+    /**
+     * Search orders at a store by customer name (partial match).
+     */
+    public List<OrderResponseDTO> searchOrdersByCustomerName(Long storeId, String name) {
+        storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("Store not found with id: " + storeId));
+
+        List<OrderDetails> orders = orderDetailsRepository.findByStoreIdAndCustomerNameContaining(storeId, name);
+        return orders.stream().map(this::toOrderResponseDTO).toList();
+    }
+
+    /**
+     * Search orders at a store by customer email (exact match).
+     */
+    public List<OrderResponseDTO> searchOrdersByCustomerEmail(Long storeId, String email) {
+        storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("Store not found with id: " + storeId));
+
+        List<OrderDetails> orders = orderDetailsRepository.findByStoreIdAndCustomerEmail(storeId, email);
+        return orders.stream().map(this::toOrderResponseDTO).toList();
     }
 
 }

@@ -13,6 +13,8 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Long getId() { return id; }
+
     @ManyToOne()
     @JoinColumn(name = "customer_id")
     @JsonManagedReference
