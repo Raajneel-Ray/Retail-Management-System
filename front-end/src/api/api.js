@@ -285,6 +285,32 @@ export async function deleteInventory(id) {
 }
 
 // ============================================================
+// ORDER APIs
+// ============================================================
+
+/**
+ * Get all orders for a specific store.
+ * GET /orders/store/{storeId}
+ *
+ * Optional query parameters for searching:
+ *   ?name=John      → filter by customer name (partial, case-insensitive)
+ *   ?email=john@..  → filter by customer email (exact, case-insensitive)
+ *
+ * Returns: [ { orderId, customerName, customerEmail, storeName, totalPrice, date, orderItems: [...] } ]
+ */
+export async function getOrdersByStore(storeId, { name, email } = {}) {
+  // Build query string from optional search parameters
+  const params = new URLSearchParams();
+  if (name) params.append('name', name);
+  if (email) params.append('email', email);
+
+  const queryString = params.toString();
+  const url = `${BASE_URL}/orders/store/${storeId}${queryString ? `?${queryString}` : ''}`;
+
+  return fetchJson(url);
+}
+
+// ============================================================
 // REVIEW APIs
 // ============================================================
 

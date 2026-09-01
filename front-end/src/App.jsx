@@ -23,6 +23,7 @@ import Products from './pages/Products';
 import Stores from './pages/Stores';
 import Inventory from './pages/Inventory';
 import PlaceOrder from './pages/PlaceOrder';
+import Orders from './pages/Orders';
 import Reviews from './pages/Reviews';
 import './App.css';
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="/stores" element={<Stores />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/place-order" element={<PlaceOrder />} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/reviews" element={<Reviews />} />
         </Routes>
       </main>
