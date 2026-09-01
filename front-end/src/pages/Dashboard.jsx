@@ -61,6 +61,13 @@ function Dashboard() {
       color: '#533483',
     },
     {
+      emoji: '📦',
+      title: 'Orders',
+      description: 'View order history per store — search by customer name or email.',
+      path: '/orders',
+      color: '#2c3e50',
+    },
+    {
       emoji: '⭐',
       title: 'Reviews',
       description: 'View customer feedback and ratings from all stores.',

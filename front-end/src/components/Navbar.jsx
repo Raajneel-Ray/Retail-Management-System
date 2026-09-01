@@ -89,6 +89,14 @@ function Navbar() {
         </li>
         <li>
           <NavLink
+            to="/orders"
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
+            Orders
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
             to="/reviews"
             className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
           >

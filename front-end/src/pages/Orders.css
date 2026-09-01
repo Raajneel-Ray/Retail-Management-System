@@ -1,0 +1,249 @@
+/* ============================================================
+   Orders.css — Order History Page Styles
+   ============================================================
+
+   CSS CONCEPT: NESTED TABLES
+   ============================
+   This page uses a "master-detail" pattern where the main table
+   shows order summaries, and clicking a row expands an inner table
+   showing the order's line items. We style the inner table differently
+   to visually distinguish it from the outer table.
+
+   CSS CONCEPT: TRANSFORM ROTATE
+   ==============================
+   The expand/collapse arrow uses transform: rotate() to animate
+   between pointing right (▶ collapsed) and pointing down (expanded).
+   ============================================================ */
+
+.orders-page h1 {
+  margin-bottom: 1.5rem;
+  color: #1a1a2e;
+}
+
+/* ============================================================
+   SEARCH BAR
+   ============================================================
+   A horizontal bar with a search type dropdown, text input,
+   and action buttons. Uses flexbox for layout.
+   ============================================================ */
+.orders-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.orders-search-bar .search-type-select {
+  min-width: 160px;
+}
+
+.orders-search-bar .search-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Order count status message */
+.orders-count {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   TABLE CONTAINER
+   ============================================================
+   overflow-x: auto adds a horizontal scrollbar on small screens
+   so the table doesn't break the page layout.
+   ============================================================ */
+.table-container {
+  overflow-x: auto;
+}
+
+/* ============================================================
+   MAIN ORDERS TABLE
+   ============================================================ */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.orders-table thead {
+  background-color: #1a1a2e;
+  color: white;
+}
+
+.orders-table th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.orders-table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   ORDER ROW — Clickable & Interactive
+   ============================================================
+   Each order row is clickable to expand/collapse its detail panel.
+   cursor: pointer tells the user it's interactive.
+   ============================================================ */
+.order-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.order-row:hover {
+  background-color: #f0f4ff;
+}
+
+/* Highlighted background when expanded */
+.order-row.expanded {
+  background-color: #e8eef8;
+}
+
+/* ============================================================
+   EXPAND/COLLAPSE ARROW
+   ============================================================
+   The arrow character ▶ rotates 90° when the row is expanded.
+   CSS transition makes the rotation smooth.
+   ============================================================ */
+.toggle-cell {
+  width: 30px;
+  text-align: center;
+}
+
+.toggle-arrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.toggle-arrow.open {
+  transform: rotate(90deg);
+}
+
+/* Customer name — slightly bolder for emphasis */
+.customer-name {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* Order total — green and bold to stand out */
+.order-total {
+  font-weight: 700;
+  color: #28a745;
+}
+
+/* ============================================================
+   ORDER DETAIL ROW — Expandable Panel
+   ============================================================
+   This row appears below the order summary when expanded.
+   It contains the nested order items table.
+   ============================================================ */
+.order-detail-row td {
+  padding: 0;
+  border-bottom: 2px solid #0f3460;
+}
+
+.order-items-panel {
+  padding: 1rem 1.5rem 1.25rem;
+  background-color: #f8f9fb;
+}
+
+.order-items-panel h4 {
+  margin-bottom: 0.75rem;
+  color: #0f3460;
+  font-size: 0.95rem;
+}
+
+/* ============================================================
+   NESTED ORDER ITEMS TABLE
+   ============================================================
+   Styled with a lighter header to distinguish from the outer table.
+   ============================================================ */
+.order-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.order-items-table thead {
+  background-color: #e8eef8;
+  color: #1a1a2e;
+}
+
+.order-items-table th {
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.order-items-table td {
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-items-table code {
+  background-color: #f0f0f0;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.item-subtotal {
+  font-weight: 600;
+  color: #0f3460;
+}
+
+.empty-items {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Empty state message for the whole table */
+.empty-message {
+  text-align: center;
+  color: #999;
+  padding: 2rem !important;
+  font-style: italic;
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+@media (max-width: 768px) {
+  .orders-search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .orders-search-bar .search-type-select,
+  .orders-search-bar .search-input {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
