@@ -1,5 +1,6 @@
 package com.Retail_Management.Backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -17,12 +18,12 @@ public class OrderDetails {
 
     @ManyToOne()
     @JoinColumn(name = "customer_id")
-    @JsonManagedReference
+    @JsonBackReference("customer-orders")
     private Customer customer;
 
     @ManyToOne()
     @JoinColumn(name = "store_id")
-    @JsonManagedReference
+    @JsonBackReference("order-store")
     private Store store;
 
     private Double totalPrice;
