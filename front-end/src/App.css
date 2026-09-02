@@ -1,0 +1,131 @@
+/* ============================================================
+   App.css — Global Styles
+   ============================================================
+
+   CSS CONCEPT: CSS RESET / GLOBAL STYLES
+   =======================================
+   Browsers have default styles (margins on <body>, font sizes, etc.)
+   that vary between browsers. A CSS reset normalizes these defaults
+   so your design looks the same everywhere.
+
+   CSS CONCEPT: THE BOX MODEL
+   ==========================
+   Every HTML element is a rectangular box with:
+     Content → Padding → Border → Margin
+   
+   box-sizing: border-box makes padding and border included
+   in the element's width/height, which is much easier to work with.
+   ============================================================ */
+
+/* Universal reset — applies to ALL elements */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  /* Font stack: the browser uses the first available font */
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #f0f2f5;
+  color: #333333;
+  line-height: 1.6;     /* Space between lines of text */
+}
+
+/* Main content area — below the navbar */
+.main-content {
+  max-width: 1200px;     /* Prevents content from stretching too wide on big screens */
+  margin: 0 auto;        /* Centers the content horizontally */
+  padding: 2rem;         /* Space inside the content area */
+  min-height: calc(100vh - 60px);  /* Full viewport height minus navbar */
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================
+   Small, reusable CSS classes for common patterns.
+   You can add these to any element: <div className="text-center">
+   ============================================================ */
+
+/* Common button style */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: #0f3460;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1a4a8a;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-warning {
+  background-color: #e94560;
+  color: white;
+}
+
+.btn-warning:hover {
+  background-color: #d63851;
+}
+
+/* Common input styling */
+input, select, textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;                       /* Removes the default blue outline */
+  border-color: #0f3460;              /* Custom focus border color */
+  box-shadow: 0 0 0 3px rgba(15, 52, 96, 0.1);  /* Subtle glow effect */
+}
+
+/* Labels */
+label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.3rem;
+  display: block;
+}

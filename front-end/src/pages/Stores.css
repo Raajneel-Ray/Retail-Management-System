@@ -1,0 +1,71 @@
+/* ============================================================
+   Stores.css — Store Management Page Styles
+   ============================================================ */
+
+.stores-page h1 {
+  margin-bottom: 1.5rem;
+  color: #1a1a2e;
+}
+
+/* Two cards side by side using flexbox */
+.stores-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;    /* Wrap to next line on small screens */
+}
+
+.store-card {
+  flex: 1;             /* Both cards take equal space */
+  min-width: 300px;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.store-card h2 {
+  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+}
+
+.card-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.store-card .form-group {
+  margin-bottom: 1rem;
+}
+
+.store-card input {
+  width: 100%;
+}
+
+/* Validation Result Badge */
+.validation-result {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.validation-result.valid {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.validation-result.invalid {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive: stack cards vertically on mobile */
+@media (max-width: 768px) {
+  .stores-grid {
+    flex-direction: column;
+  }
+}

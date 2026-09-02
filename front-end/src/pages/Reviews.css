@@ -1,0 +1,150 @@
+/* ============================================================
+   Reviews.css — Customer Reviews Page Styles
+   ============================================================ */
+
+.reviews-page h1 {
+  margin-bottom: 1.5rem;
+  color: #1a1a2e;
+}
+
+/* Filter Bar */
+.reviews-filter {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.reviews-filter input {
+  width: 130px;
+}
+
+/* Review count message */
+.reviews-count {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   REVIEWS GRID
+   ============================================================
+   Using CSS Grid with auto-fill for a responsive card layout.
+   Each card is at least 300px wide and takes equal space.
+   ============================================================ */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+}
+
+/* Individual Review Card */
+.review-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  color: #1a1a2e;
+  font-size: 0.95rem;
+}
+
+/* Rating Badges — different colors based on score */
+.rating-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+.rating-excellent {
+  background-color: #28a745;     /* Green */
+}
+
+.rating-good {
+  background-color: #5cb85c;     /* Light green */
+}
+
+.rating-average {
+  background-color: #ffc107;     /* Yellow */
+  color: #333;
+}
+
+.rating-poor {
+  background-color: #fd7e14;     /* Orange */
+}
+
+.rating-terrible {
+  background-color: #dc3545;     /* Red */
+}
+
+/* Star Rating Display */
+.stars-row {
+  margin-bottom: 0.8rem;
+}
+
+.star {
+  font-size: 1.3rem;
+  margin-right: 2px;
+}
+
+/* Filled star — gold color */
+.star.filled {
+  color: #FFD700;
+}
+
+/* Empty star — light gray */
+.star.empty {
+  color: #ddd;
+}
+
+/* Review Comment — styled as a quote */
+.review-comment {
+  color: #555;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  /* Border-left creates a "quote" style effect */
+  border-left: 3px solid #e0e0e0;
+  padding-left: 0.8rem;
+}
+
+/* Metadata (Store & Product IDs) */
+.review-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reviews-filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reviews-filter input {
+    width: 100%;
+  }
+}

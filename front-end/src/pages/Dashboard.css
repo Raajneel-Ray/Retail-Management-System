@@ -1,0 +1,130 @@
+/* ============================================================
+   Dashboard.css — Dashboard Page Styles
+   ============================================================
+
+   CSS CONCEPT: GRADIENTS
+   =======================
+   linear-gradient() creates a smooth color transition.
+   Syntax: linear-gradient(direction, color1, color2, ...)
+   135deg means the gradient goes from top-left to bottom-right.
+
+   CSS CONCEPT: CSS GRID
+   =====================
+   CSS Grid is a 2D layout system (rows AND columns).
+   Unlike Flexbox (1D: row OR column), Grid handles both dimensions.
+
+   Key properties:
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);  → 3 equal columns
+     gap: 1.5rem;                            → Space between grid items
+
+   '1fr' means "1 fraction of available space."
+   repeat(3, 1fr) = three equal-width columns.
+   ============================================================ */
+
+/* Hero section with gradient background */
+.hero {
+  background: linear-gradient(135deg, #0f3460, #533483, #e94560);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;         /* Slightly transparent for a softer look */
+  max-width: 600px;
+  margin: 0 auto;       /* Centers the paragraph */
+  line-height: 1.7;
+}
+
+/* Cards grid layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);   /* 3 equal columns */
+  gap: 1.5rem;
+}
+
+/* Individual dashboard card */
+.dashboard-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-decoration: none;         /* Remove link underline */
+  color: #333;
+  position: relative;            /* Needed for the arrow positioning */
+
+  /* Box shadow gives a "card" appearance — floating above the background */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+  /* CSS TRANSITIONS make property changes animate smoothly */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* HOVER EFFECT: Card lifts up and shadow grows */
+.dashboard-card:hover {
+  transform: translateY(-5px);     /* Moves the card 5px upward */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+}
+
+.dashboard-card p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.card-arrow {
+  position: absolute;      /* Positioned relative to the card (parent) */
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.3rem;
+  color: #0f3460;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(5px);   /* Slides arrow to the right on hover */
+}
+
+/* ============================================================
+   RESPONSIVE: @media queries
+   ============================================================
+   Adjust the grid for smaller screens:
+   - Tablets (≤768px): 2 columns
+   - Phones (≤480px): 1 column
+   ============================================================ */
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);   /* 2 columns on tablets */
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;              /* 1 column on phones */
+  }
+}

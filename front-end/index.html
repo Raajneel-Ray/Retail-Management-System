@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      META TAGS — HTML Concept
+      ========================================
+      <meta charset="UTF-8"> tells the browser to use UTF-8 encoding (supports all characters).
+      <meta name="viewport" ...> makes the page responsive on mobile devices.
+      Without the viewport meta tag, mobile browsers would render the page at
+      desktop width and then shrink it down, making text tiny.
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retail Management System</title>
+  </head>
+  <body>
+    <!--
+      THE ROOT DIV — Where React Lives
+      ========================================
+      React is a "Single Page Application" (SPA) framework.
+      The entire app renders INSIDE this single <div>.
+      React dynamically creates and updates HTML elements here
+      using JavaScript — you never write multiple HTML pages.
+    -->
+    <div id="root"></div>
+
+    <!--
+      SCRIPT TAG with type="module"
+      ========================================
+      This loads our React entry point (main.jsx).
+      type="module" tells the browser this is an ES Module,
+      which allows using import/export syntax.
+      Vite handles transforming JSX into regular JavaScript.
+    -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
